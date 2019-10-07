@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>	.:: JAVASCRIPT + PYTHON ::.</title>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+	</head>
+	<body>
+		<center>
+
+			<h1>Escolha de números randomicos: <span id="response" >NULL</span></h1>
+			<br />
+
+			<button id="btn">Click Me</button>
+			<br /><br />
+			
+
+			<!-- <div id="lista">
+				Primeira integração com {{ name }} versão {{ version }} !
+			</div> -->
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+			<script type="text/javascript">
+
+				/*$("#reloader").click(function(){
+					$.ajax({
+						url: "/receiver",
+						type: "POST",
+						success: function(resp){
+							//$('div#content').append(resp.data);
+							//$("div#content").load(" div#content").append(resp.data);;
+						}
+					})
+					
+				});*/
+			// setup some JSON to use
+			/* var cars = [
+				{ "make":"Porsche", "model":"911S" },
+				{ "make":"Mercedes-Benz", "model":"220SE" },
+				{ "make":"Jaguar","model": "Mark VII" }
+			];
+
+			window.onload = function() {
+				// setup the button click
+				document.getElementById("theButton").onclick = function() {
+					doWork()
+				};
+			}
+
+			function doWork() {
+				// ajax the JSON to the server
+				$.post("receiver", cars, function(){
+
+				});
+				// stop link reloading the page
+				event.preventDefault();
+			}*/
+
+			$('button#btn').click(function(){
+				$.ajax({
+					url: "/receiver",
+					type: "POST",
+					success: function(resp){
+						document.getElementById("response").innerHTML = "";
+						$('span#response').append(resp.data);
+						//console.log(resp.data);
+						//console.log("Hello world!");
+						//$('div#Response').load();
+					}
+				});
+			});
+			</script>
+			
+
+		</center>
+	</body>
+
+	<!--
+		Referências:
+		https://www.makeuseof.com/tag/python-javascript-communicate-json/
+		https://realpython.com/python-requests/
+
+		AJAX com Flask
+		https://github.com/michaelyousrie/Flask-Tutorials/tree/master/ajax%20with%20flask
+
+		Limpar o campo antes de colocar o próximo elemento
+		https://stackoverflow.com/questions/3450593/how-do-i-clear-the-content-of-a-div-using-javascript
+	-->
+</html>
