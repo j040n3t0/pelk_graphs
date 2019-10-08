@@ -9,7 +9,7 @@
 	<body>
 		<center>
 
-			<h1>Escolha de números randomicos: <span id="response" >NULL</span></h1>
+			<h1>Pimeiro teste com <span id="name" >NULL</span> na versão <span id="version" >NULL</span></h1>
 			<br />
 
 			<button id="btn">Click Me</button>
@@ -61,9 +61,13 @@
 					url: "/receiver",
 					type: "POST",
 					success: function(resp){
-						document.getElementById("response").innerHTML = "";
-						$('span#response').append(resp.data);
-						//console.log(resp.data);
+						document.getElementById("version").innerHTML = "";
+						document.getElementById("name").innerHTML = "";
+						$('span#version').append(resp.version);
+						$('span#name').append(resp.name);
+						console.log(resp.version);
+						//console.log(resp.elasticsearch);
+						console.log(resp.name);
 						//console.log("Hello world!");
 						//$('div#Response').load();
 					}

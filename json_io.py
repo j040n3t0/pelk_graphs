@@ -45,9 +45,25 @@ def worker():
 	#print "\n"
 
 	#data = "ashahsuashuashasua"
-	data = randint(0,9)
 
-	return jsonify({'data': render_template('response.html', data=data)})
+	response = requests.get('http://10.0.1.69:9200')
+	json_response = response.json()
+	print "\n"
+	try:
+		print json_response['version']['number']
+	except:
+		print "Error"
+	print "\n"
+	name = json_response['cluster_name']
+	version = json_response['version']['number']
+	#return render_template("index.html", name=name, version=version)
+
+	#data = randint(0,9)
+
+	return jsonify({
+			'version': render_template('response.html', version=version),
+			'name': render_template('response.html', name=name)
+		})
 
 	"""for item in data:
 		# loop over every row
