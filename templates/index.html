@@ -11,6 +11,8 @@
 
 			<h1>Pimeiro teste com <span id="name" >NULL</span> na versão <span id="version" >NULL</span></h1>
 			<br />
+			<br />
+			<h3>Mas para que serve?!? <span id="message">PARA NADA</span>!!</h3>
 
 			<button id="btn">Click Me</button>
 			<br /><br />
@@ -63,11 +65,14 @@
 					success: function(resp){
 						document.getElementById("version").innerHTML = "";
 						document.getElementById("name").innerHTML = "";
+						document.getElementById("message").innerHTML = "";
 						$('span#version').append(resp.version);
 						$('span#name').append(resp.name);
+						$('span#message').append(resp.message);
 						console.log(resp.version);
 						//console.log(resp.elasticsearch);
 						console.log(resp.name);
+						console.log(resp.message);
 						//console.log("Hello world!");
 						//$('div#Response').load();
 					}

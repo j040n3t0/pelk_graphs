@@ -51,18 +51,22 @@ def worker():
 	print "\n"
 	try:
 		print json_response['version']['number']
+		print json_response['cluster_name']
+		print json_response['tagline']
 	except:
 		print "Error"
-	print "\n"
+	#print "\n"
 	name = json_response['cluster_name']
 	version = json_response['version']['number']
+	message = json_response['tagline']
 	#return render_template("index.html", name=name, version=version)
 
 	#data = randint(0,9)
 
 	return jsonify({
 			'version': render_template('response.html', version=version),
-			'name': render_template('response.html', name=name)
+			'name': render_template('response.html', name=name),
+			'message': render_template('response.html', message=message)
 		})
 
 	"""for item in data:
