@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>	.:: JAVASCRIPT + PYTHON ::.</title>
+		<title>	.:: JAVASCRIPT + PYTHON + CHART JS ::.</title>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
@@ -9,12 +9,16 @@
 	<body>
 		<center>
 
-			<h1>Pimeiro teste com <span id="name" >NULL</span> na versão <span id="version" >NULL</span></h1>
-			<br />
-			<br />
+			<h1>Pimeiro teste com <span id="name" >...</span> na versão <span id="version" >...</span></h1>
 			<h3>Mas para que serve?!? <span id="message">PARA NADA</span>!!</h3>
 
-			<button id="btn">Click Me</button>
+			<h3><font color="blue">Informações sobre a Infra Docker</font></h3>
+			<p>Container Name: <span id="docker_list"> - </span>
+			<p>Containers Documents: <span id="docker_count"> - </span>
+
+			<br /><br />
+			<button id="btn">Conectar</button>
+			<input type="text" id ="Eid" name="ip_elk" placeholder="IP ELASTICSEARCH" />
 			<br /><br />
 			
 
@@ -62,24 +66,66 @@
 				$.ajax({
 					url: "/receiver",
 					type: "POST",
+					//data: '{ "IP": "192.168.1.6" }',
+					data: "{\"IP\":\""+$("#Eid").val()+"\"}",
 					success: function(resp){
 						document.getElementById("version").innerHTML = "";
 						document.getElementById("name").innerHTML = "";
 						document.getElementById("message").innerHTML = "";
+						document.getElementById("docker_list").innerHTML = "";
+						document.getElementById("docker_count").innerHTML = "";
 						$('span#version').append(resp.version);
 						$('span#name').append(resp.name);
 						$('span#message').append(resp.message);
+						$('span#docker_list').append(resp.containers_list);
+						$('span#docker_count').append(resp.containers_docs);
 						console.log(resp.version);
 						//console.log(resp.elasticsearch);
 						console.log(resp.name);
 						console.log(resp.message);
 						//console.log("Hello world!");
 						//$('div#Response').load();
-					}
+					},
+					contentType: "application/json",
+    				//dataType: 'json'
 				});
 			});
 			</script>
 			
+
+			<!-- Start Canvas -> Desenhar elementos gráficos usando JS -->
+			<canvas id="piechart" class="pie-chart" height="20vw" width="90vw"></canvas>
+
+			<!-- Include Chart JS -->
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+			<script>
+				// ctx = Context
+				var ctx2 = document.getElementsByClassName("pie-chart");
+				var myPieChart = new Chart(ctx2, {
+		    		type: 'pie',
+		    		data: {
+						datasets: [
+						{
+							data: [15, 80],
+							backgroundColor: [
+								"rgb(255, 99, 132)",
+								"rgb(54, 162, 235)"
+							],
+							borderWidth: 5,
+						}],
+						// These labels appear in the legend and in the tooltips when hovering different arcs
+					    labels: ['Red','Blue']
+					},
+					options: {
+						title: {
+							display: true,
+							text: "RELATÓRIO DE VIRUS ANUAL"
+						}
+					},
+					
+				});
+			</script>
 
 		</center>
 	</body>
@@ -94,5 +140,17 @@
 
 		Limpar o campo antes de colocar o próximo elemento
 		https://stackoverflow.com/questions/3450593/how-do-i-clear-the-content-of-a-div-using-javascript
+
+		Campo INPUT com html transparente
+		https://codepen.io/tyrus/pen/eLlgs
+
+		Passar INPUT como parametro
+		https://www.daniweb.com/programming/web-development/threads/274359/passing-input-text-value-to-ajax-call
+
+		Converter CURL para Python Requests
+		https://curl.trillworks.com/
+
+		Usar Jquery para POST com dados em Json
+		https://stackoverflow.com/questions/6255344/how-can-i-use-jquery-to-post-json-data
 	-->
 </html>
