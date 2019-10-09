@@ -22,13 +22,52 @@
 			<input type="text" id ="Eid" name="ip_elk" placeholder="IP ELASTICSEARCH"/>
 			<br /><br />
 			
+
+			<!-- <div id="lista">
+				Primeira integração com {{ name }} versão {{ version }} !
+			</div> -->
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 			<script type="text/javascript">
+
+				/*$("#reloader").click(function(){
+					$.ajax({
+						url: "/receiver",
+						type: "POST",
+						success: function(resp){
+							//$('div#content').append(resp.data);
+							//$("div#content").load(" div#content").append(resp.data);;
+						}
+					})
+					
+				});*/
+			// setup some JSON to use
+			/* var cars = [
+				{ "make":"Porsche", "model":"911S" },
+				{ "make":"Mercedes-Benz", "model":"220SE" },
+				{ "make":"Jaguar","model": "Mark VII" }
+			];
+
+			window.onload = function() {
+				// setup the button click
+				document.getElementById("theButton").onclick = function() {
+					doWork()
+				};
+			}
+
+			function doWork() {
+				// ajax the JSON to the server
+				$.post("receiver", cars, function(){
+
+				});
+				// stop link reloading the page
+				event.preventDefault();
+			}*/
 
 			$('button#btn').click(function(){
 				$.ajax({
 					url: "/receiver",
 					type: "POST",
+					//data: '{ "IP": "192.168.1.6" }',
 					data: "{\"IP\":\""+$("#Eid").val()+"\"}",
 					success: function(resp){
 						document.getElementById("version").innerHTML = "";
@@ -47,22 +86,36 @@
 						var arrNomeTemp = resp.containers_list.split(" ");
 
 						// remover campos vazios no array
+						//arrDocs = arrDocs.filter(Boolean);
+						//arrNome = arrNome.filter(Boolean);
+
 						var arrDocs = arrDocsTemp.filter(function (el) {
 							if (el.replace(/\s/g, '').length) return el;
 						}).map(function(el) {
 							return el.trim();
 						});
-						// remover campos vazios no array
+
 						var arrNome = arrNomeTemp.filter(function (el) {
 							if (el.replace(/\s/g, '').length) return el;
 						}).map(function(el) {
 							return el.trim();
 						});
 
-						
+
+						console.log(arrDocs);
+						console.log(arrNome);
+
 						montaGrafico(arrDocs, arrNome);
+
+
+						//console.log(resp.elasticsearch);
+						//console.log(resp.name);
+						//console.log(resp.message);
+						//console.log("Hello world!");
+						//$('div#Response').load();
 					},
 					contentType: "application/json",
+    				//dataType: 'json'
 				});
 			});
 			</script>
