@@ -5,27 +5,38 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
+		<link rel="stylesheet" type="text/css" href="/static/css/jschart.css">
 	</head>
 	<body>
 		<center>
 
 			<h1>Pimeiro teste com <span id="name" >...</span> na versão <span id="version" >...</span></h1>
-			<h3>Mas para que serve?!? <span id="message">PARA NADA</span>!!</h3>
-		</center>
+			<h3>Mas para que serve?!? <span id="message">PARA NADA</span>!!</h3><button id="btn">Conectar</button>
+			<input type="text" id ="Eid" name="ip_elk" placeholder="IP ELASTICSEARCH" value="10.0.1.69" />
 
 			<h3><font color="blue">Informações sobre a Infra Docker</font></h3>
-			<p>Container Name: <span id="docker_list"> - </span>
-			<p>Containers Documents: <span id="docker_count"> - </span>
-		<center>
-			<br /><br />
-			<button id="btn">Conectar</button>
-			<input type="text" id ="Eid" name="ip_elk" placeholder="IP ELASTICSEARCH"/>
-			<br /><br />
+
+			<table> 
+				<thead>
+					<tr>
+						<th>CONTAINER</th>
+						<th>DOCUMENTS</th>
+					</tr>
+				</thead>
+				<tbody id="docker_count">
+					<tr>
+						<td>NULL</td>
+						<td>NULL</td>
+					<tr>
+				</tbody>
+			</table>
+
+			<h3>Quantidade de containers: <span id="qtd_containers">0</span></h3>
 			
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 			<script type="text/javascript">
-
-			$('button#btn').click(function(){
+				var text = "";
+				$('button#btn').click(function(){
 				$.ajax({
 					url: "/receiver",
 					type: "POST",
@@ -34,14 +45,13 @@
 						document.getElementById("version").innerHTML = "";
 						document.getElementById("name").innerHTML = "";
 						document.getElementById("message").innerHTML = "";
-						document.getElementById("docker_list").innerHTML = "";
+						// document.getElementById("docker_list").innerHTML = "";
 						document.getElementById("docker_count").innerHTML = "";
+						document.getElementById("qtd_containers").innerHTML = "";
 						$('span#version').append(resp.version);
 						$('span#name').append(resp.name);
 						$('span#message').append(resp.message);
-						$('span#docker_list').append(resp.containers_list);
-						$('span#docker_count').append(resp.containers_docs);
-						console.log(typeof(resp.containers_docs));
+						
 
 						var arrDocsTemp = resp.containers_docs.split(" ");
 						var arrNomeTemp = resp.containers_list.split(" ");
@@ -59,7 +69,26 @@
 							return el.trim();
 						});
 
+						//console.log(typeof(arrDocs));
+						//console.log(typeof(arrNome));
+						//console.log(arrDocs);
+						var i;
 						
+						for (i = 0; i < arrDocs.length; i++) {
+							text = "<tr><td><b>Container Name.:</b> " + arrNome[i] + "</td><td> <b>Qtd Docs.:</b>"+ arrDocs[i] +" </td></tr>"
+							console.log(text);
+							$('tbody#docker_count').append(text);
+  							
+						}
+						//$('span#docker_list').append(arrDocs);
+						//$('span#docker_count').append(arrNome);
+
+						if (arrDocs.length > 10){
+							$('span#qtd_containers').append(arrDocs.length);
+						}
+						else{
+							$('span#qtd_containers').append("");
+						}
 						montaGrafico(arrDocs, arrNome);
 					},
 					contentType: "application/json",
