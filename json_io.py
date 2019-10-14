@@ -67,6 +67,16 @@ def worker():
 			}\
 		}\
 	}'
+
+	data2 = '{"query": {"bool": {"must": [{"range": {"@timestamp": {"gte": "now-15s", "lte": "now"}}},{"query_string": {"query": "docker.memory.usage.pct: *"}}]}}}'
+	response2 = requests.post('http://%s:9200/metricbeat-2019.10.14/_search' % ip_elasticsearch, headers=headers, data=data2)
+	response2_json = response2.json()
+	print "\n\nJSON 2"
+	#print response2_json
+	print response2_json['hits']['hits']
+	print "#########################\n"
+
+
 	response = requests.post('http://%s:9200/metricbeat-2019.10.09/_search' % ip_elasticsearch, headers=headers, data=data)
 
 	response_json = response.json()
