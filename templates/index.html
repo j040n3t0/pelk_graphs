@@ -12,7 +12,7 @@
 
 			<h1>Pimeiro teste com <span id="name" >...</span> na versão <span id="version" >...</span></h1>
 			<h3>Mas para que serve?!? <span id="message">PARA NADA</span>!!</h3><button id="btn">Conectar</button>
-			<input type="text" id="Eid" name="ip_elk" placeholder="IP ELASTICSEARCH"/>
+			<input type="text" id="Eid" name="ip_elk" placeholder="IP ELASTICSEARCH" value="10.0.1.69" />
 
 			<h3><font color="blue">Informações sobre a Infra Docker</font></h3>
 
@@ -35,11 +35,12 @@
 			
 			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 			<script type="text/javascript">
-				/* DESCOMENTE PARA CARREGAMENTO AUTOMATICO
+				/* DESCOMENTE PARA CARREGAMENTO AUTOMATICO */
 				$(document).ready(function() {
 				  setInterval(function() {
 				    $("button#btn").trigger('click');
-				  }, 5000); */
+				  }, 5000);
+				});
 
 				$("#btn").click(function() {
 					if($("#Eid").val()== null || $("#Eid").val() ==""){
